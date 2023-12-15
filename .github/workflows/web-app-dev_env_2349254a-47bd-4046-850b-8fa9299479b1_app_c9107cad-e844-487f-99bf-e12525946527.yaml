@@ -18,7 +18,7 @@ env:
   WEB_APP_INSTALL_DEPS_COMMAND: npm i
   WEB_APP_BUILD_COMMAND: npm run build
   IMAGE_TAG: ${{github.event.client_payload.commitId || github.sha}}
-  DEPLOY_STEP_SHOULD_DEPLOY: 'true'
+  DEPLOY_STEP_SHOULD_DEPLOY: 'false'
 jobs:
   build:
     permissions: write-all
