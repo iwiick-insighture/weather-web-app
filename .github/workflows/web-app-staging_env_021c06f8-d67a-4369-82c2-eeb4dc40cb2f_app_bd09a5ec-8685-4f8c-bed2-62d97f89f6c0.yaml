@@ -1,0 +1,73 @@
+name: >-
+  web-app-staging_env_021c06f8-d67a-4369-82c2-eeb4dc40cb2f_app_bd09a5ec-8685-4f8c-bed2-62d97f89f6c0
+  Pipeline (Skyu Generated)
+'on':
+  push:
+    branches:
+      - staging
+      - release/*
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: pipeline_2a25905f-5207-47a1-a544-433bb672e62b
+env:
+  ENCODED_PIPELINE_SECRET: >-
+    ${{secrets.SKYUWEBAPPTEST_ENV_021C06F8D67A436982C2EEB4DC40CB2F_APP_BD09A5EC86854F8CBED262D97F89F6C0_WEBAPPSTAGING_ENV_021C06F8D67A436982C2EEB4DC40CB2F_APP_BD09A5EC86854F8CBED262D97F89F6C0}}
+  BUILD_ENVIRONEMENT_VERSION: latest
+  WEB_APP_S3_BUCKET_NAME: skyu-project-8a623f8d-3ce6-456b-9fba-97b538a237a2-webapps
+  WEB_APP_INSTALL_DEPS_COMMAND: ' && npm i'
+  WEB_APP_BUILD_COMMAND: npm run build
+  IMAGE_TAG: ${{github.event.client_payload.commitId || github.sha}}
+  DEPLOY_STEP_SHOULD_DEPLOY: 'true'
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start
+        run: >-
+          echo " Starting GitHub Action!" && echo "IMAGE_EXISTS_IN_ECR=false" >>
+          $GITHUB_ENV
+      - name: 'Run :: Checkout repository'
+        uses: actions/checkout@v2
+      - name: 'Run :: Checkout Specific Commit'
+        if: ${{ github.event.client_payload.commitId != null }}
+        run: git checkout ${{ github.event.client_payload.commitId }}
+      - name: 'Run :: Decoding Secrets'
+        run: >-
+          echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r
+          'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo
+          "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
+      - name: 'Run :: Configure AWS credentials'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.roleARN }}
+          role-session-name: skyu-pipeline-assume-role-session
+          aws-region: ${{ env.region }}
+      - name: 'Run :: Set up Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.BUILD_ENVIRONEMENT_VERSION }}
+      - name: 'Run :: Install Web App Dependancies'
+        run: ${{ env.WEB_APP_INSTALL_DEPS_COMMAND }}
+      - name: 'Run :: Build Web App'
+        run: ${{ env.WEB_APP_BUILD_COMMAND }} && ls -R
+      - name: 'Run :: Sync Web App with S3 bucket'
+        run: aws s3 sync ${{ env.WEB_APP_S3_SYNC_URL }}
+      - name: 'Run :: Deploy and Notify Resource Service'
+        run: |2-
+
+              response=$(curl -d "imageRegistryURL=${{ env.registryURL }}/${{env.REPOSITORY_NAME}}&appVersionId=${{ env.DEPLOYMENT_APP_VERSION_ID }}&tag=${{ env.IMAGE_TAG }}&containerName=${{ env.DEPLOYMENT_CONTAINER_NAME }}&shouldDeploy=${{env.DEPLOY_STEP_SHOULD_DEPLOY}}&pipelineRunId=${{ github.run_id }}&commitDetails[commitHash]=${{ github.sha }}&commitDetails[commitAvatar]=https://github.com/${{ github.event.head_commit.author.name }}.png&commitDetails[commitTime]=${{ github.event.head_commit.timestamp }}&commitDetails[commitMessage]=\"${{ github.event.head_commit.message }}\"&commitDetails[commitUser]=${{ github.event.head_commit.author.name }}" -X PATCH -H 'Authorization: ${{ env.SERVICE_ACC_ACCESS_TOKEN }}' -H 'x-organization-id: ${{ env.DEPLOYMENT_ORGANIZATION_ID }}' -H 'x-project-id: ${{ env.DEPLOYMENT_PROJECT_ID }}' -H 'x-environment-id: ${{ env.DEPLOYMENT_ENVIRONMENT_ID }}' -H 'x-application-id: ${{ env.DEPLOYMENT_APPLICATION_ID }}' -H 'x-auth-by: sa' -H 'Content-Type: application/x-www-form-urlencoded' 'https://api.dev.skyu.io/resource-service/applications/deploy')
+              status_code=$?
+
+              if [ $status_code -eq 0 ]; then
+                if echo "$response" | grep -q '"success":true'; then
+                  echo "SUCCESS :: $response"
+                else
+                  echo "FAILED :: $response"
+                  exit 1
+                fi
+              else
+                echo "Failed to deploy. HTTP status code: $status_code"
+                exit 1
+              fi
+            
