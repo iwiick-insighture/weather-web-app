@@ -17,7 +17,7 @@ env:
     s3://skyu-project-bc6015b4-7dd1-4fec-aaf3-973b7ddf2570-webapps/dev/test-app-2
   WEB_APP_INSTALL_DEPS_COMMAND: npm i
   WEB_APP_BUILD_COMMAND: npm run build
-  PORT: '3000'
+  PORT: '5000'
   IMAGE_TAG: ${{github.event.client_payload.commitId || github.sha}}
 jobs:
   build:
