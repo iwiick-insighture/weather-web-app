@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          SKYU WEB APP
+          SKYU DEMO, 19.12.2023
         </p>
         <a
           className="App-link"
