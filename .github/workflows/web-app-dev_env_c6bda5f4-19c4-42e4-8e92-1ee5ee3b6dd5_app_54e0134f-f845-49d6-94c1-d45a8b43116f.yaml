@@ -19,7 +19,6 @@ env:
   APP_INSTALL_DEPS_COMMAND: npm i
   APP_BUILD_COMMAND: npm run build
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
-  REACT_APP_LABEL: '"HI FROM ENV"'
 jobs:
   code-scan:
     name: Code Scan
@@ -142,6 +141,8 @@ jobs:
     name: Build And Sync Web App
     permissions: write-all
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_LABEL: "HI FROM ENV"
     steps:
       - name: Start
         run: |2-
