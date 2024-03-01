@@ -18,7 +18,6 @@ env:
     s3://skyu-project-d858d780-1e39-47ce-aa40-057e703a5f92-webapps/prod/react-web-app
   APP_INSTALL_DEPS_COMMAND: npm i
   APP_BUILD_COMMAND: npm run build
-  REACT_APP_LABEL: '"HI FROM ENV"'
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
 jobs:
   code-scan:
@@ -142,6 +141,8 @@ jobs:
     name: Build And Sync Web App
     permissions: write-all
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_LABEL: "HI FROM ENV"
     steps:
       - name: Start
         run: |2-
