@@ -18,23 +18,14 @@ env:
     s3://skyu-project-d858d780-1e39-47ce-aa40-057e703a5f92-webapps/prod/react-web-app
   APP_INSTALL_DEPS_COMMAND: npm i
   APP_BUILD_COMMAND: npm run build
+  REACT_APP_LABEL: '"HI FROM ENV"'
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
 jobs:
   code-scan:
     name: Code Scan
-    permissions: write-all
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
-      - name: 'Run :: Decoding Secrets dc8bb8e0-3a57-4684-8388-78bbb0379627'
-        run: |2-
-
-                  if [ ! -x "$(command -v jq)" ]; then
-                    echo "jq not found, installing..."
-                    sudo apt-get update
-                    sudo apt-get install -y jq
-                  fi
-                  echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
-                
       - name: 'Run :: Checkout repository for Code Scan'
         uses: actions/checkout@v4
       - name: 'Run :: Decoding Secrets cfdfd2ab-59ed-4030-ad5b-5dc5e5fa515d'
@@ -75,7 +66,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: 'Run :: Decoding Secrets eab00a89-ccb3-4b3d-a873-467b3666adae'
+      - name: 'Run :: Decoding Secrets 92ae027c-2d21-4d98-bb1c-3ab97e1bb0a8'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -102,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData }}
     steps:
-      - name: 'Run :: Decoding Secrets 48101d77-c4ae-4060-8f23-57eef3bb27bb'
+      - name: 'Run :: Decoding Secrets 203a56d0-9688-4b40-b57b-2863193e828c'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -166,7 +157,7 @@ jobs:
 
               git fetch
               git checkout ${{ github.event.client_payload.commitId }}
-      - name: 'Run :: Decoding Secrets 8e667ca6-05b3-4cd4-b136-02aa4b752296'
+      - name: 'Run :: Decoding Secrets c626a38e-d348-4489-af3b-4e8476d5dfcb'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -176,7 +167,7 @@ jobs:
                   fi
                   echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
                 
-      - name: 'Run :: Configure AWS credentials 365363d6-e311-430a-b876-1e5a53d8d273'
+      - name: 'Run :: Configure AWS credentials 6b801d9b-d2ca-4697-9e15-5e2bb847d776'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.roleARN }}
@@ -200,7 +191,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ !(failure() || cancelled()) }}
     steps:
-      - name: 'Run :: Decoding Secrets 50d2bb1e-cfa4-4ce8-ac62-78dbd1d4f2ed'
+      - name: 'Run :: Decoding Secrets 7f07e6f9-586a-437f-b522-8249fbf6c83c'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -223,7 +214,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: 'Run :: Decoding Secrets 821378fc-43ca-4f6f-b3a1-8ff0981fbc7d'
+      - name: 'Run :: Decoding Secrets dc3d1784-927c-4f95-9e0b-681ecc424a91'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -244,7 +235,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData == null }}
     steps:
-      - name: 'Run :: Decoding Secrets 3a7b9548-c913-41b8-bfcc-afc2acd44bd9'
+      - name: 'Run :: Decoding Secrets 0410ed47-88e3-48f9-b18e-7b3f71a857f1'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
