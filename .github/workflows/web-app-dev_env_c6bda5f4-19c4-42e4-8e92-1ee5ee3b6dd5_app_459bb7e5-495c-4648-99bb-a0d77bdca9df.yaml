@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: 'Run :: Checkout repository for Code Scan'
         uses: actions/checkout@v4
-      - name: 'Run :: Decoding Secrets f057d972-da0b-47a7-a7ef-5bcd5dff60b5'
+      - name: 'Run :: Decoding Secrets 4a7c21f7-f9cb-4202-af7e-82ce84a50ddd'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -66,7 +66,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: 'Run :: Decoding Secrets 4fc66441-54ff-47ae-9e97-24d9990aa470'
+      - name: 'Run :: Decoding Secrets e3e8e9f1-05b2-446a-9b6c-504d8809791e'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData }}
     steps:
-      - name: 'Run :: Decoding Secrets 9478de59-8915-456c-993a-9ba0aa1ee58f'
+      - name: 'Run :: Decoding Secrets db6b5e27-6d17-40eb-b389-503e74bff5ba'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -157,7 +157,7 @@ jobs:
 
               git fetch
               git checkout ${{ github.event.client_payload.commitId }}
-      - name: 'Run :: Decoding Secrets 424979c1-4028-4977-ad04-a6f53685bc86'
+      - name: 'Run :: Decoding Secrets 84d8f140-b136-451a-8f41-6f4af3df81f3'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -167,7 +167,7 @@ jobs:
                   fi
                   echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
                 
-      - name: 'Run :: Configure AWS credentials e570df4f-124b-4588-b74a-7936022a3fa3'
+      - name: 'Run :: Configure AWS credentials cfb87920-3297-4e42-b29b-b85fd804cfa5'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.roleARN }}
@@ -197,7 +197,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ !(failure() || cancelled()) }}
     steps:
-      - name: 'Run :: Decoding Secrets 90e76253-b63e-4f68-9470-027a2d9978ad'
+      - name: 'Run :: Decoding Secrets 81e65e8e-a090-4079-9d38-e44e2e721fd5'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -220,7 +220,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: 'Run :: Decoding Secrets 0f3138ca-ba18-43de-88aa-d1e76c7f6eeb'
+      - name: 'Run :: Decoding Secrets 879b6968-6596-4425-a890-5593f6e0d1b8'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -243,7 +243,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ github.event.client_payload.releaseData == null }}
     steps:
-      - name: 'Run :: Decoding Secrets cf2e94f6-14f9-4c9d-b887-3010093ef01d'
+      - name: 'Run :: Decoding Secrets d274f1db-b4ab-4d7a-b775-e42fd3630b44'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
