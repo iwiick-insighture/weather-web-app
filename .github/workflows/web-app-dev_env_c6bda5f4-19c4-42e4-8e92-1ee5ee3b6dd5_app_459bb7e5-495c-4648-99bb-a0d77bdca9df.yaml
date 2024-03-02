@@ -18,7 +18,6 @@ env:
     s3://skyu-project-d858d780-1e39-47ce-aa40-057e703a5f92-webapps/dev/iwiick-web-app-1
   APP_INSTALL_DEPS_COMMAND: npm i
   APP_BUILD_COMMAND: npm run build
-  REACT_APP_LABEL: IWIICKKKKKKKKKKKKKKKKKKK
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
 jobs:
   code-scan:
@@ -28,7 +27,7 @@ jobs:
     steps:
       - name: 'Run :: Checkout repository for Code Scan'
         uses: actions/checkout@v4
-      - name: 'Run :: Decoding Secrets 4a7c21f7-f9cb-4202-af7e-82ce84a50ddd'
+      - name: 'Run :: Decoding Secrets 4b7c0808-fca1-47c3-b7f7-c9ab6afb1124'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -66,7 +65,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: 'Run :: Decoding Secrets e3e8e9f1-05b2-446a-9b6c-504d8809791e'
+      - name: 'Run :: Decoding Secrets 0bd08ed4-b108-46ee-bd00-a2bec97e88df'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -93,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData }}
     steps:
-      - name: 'Run :: Decoding Secrets db6b5e27-6d17-40eb-b389-503e74bff5ba'
+      - name: 'Run :: Decoding Secrets 0b6e55b6-d271-415b-a31f-3a7b259f33c6'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -157,7 +156,7 @@ jobs:
 
               git fetch
               git checkout ${{ github.event.client_payload.commitId }}
-      - name: 'Run :: Decoding Secrets 84d8f140-b136-451a-8f41-6f4af3df81f3'
+      - name: 'Run :: Decoding Secrets 7e9abc82-69df-489c-abf9-5e83b853f79a'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -167,7 +166,7 @@ jobs:
                   fi
                   echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
                 
-      - name: 'Run :: Configure AWS credentials cfb87920-3297-4e42-b29b-b85fd804cfa5'
+      - name: 'Run :: Configure AWS credentials 3ce4e16a-704a-4636-85fe-2374c06c4bd5'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.roleARN }}
@@ -197,7 +196,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ !(failure() || cancelled()) }}
     steps:
-      - name: 'Run :: Decoding Secrets 81e65e8e-a090-4079-9d38-e44e2e721fd5'
+      - name: 'Run :: Decoding Secrets ffeae14a-29c3-49a2-9715-166776b83ce4'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -220,7 +219,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: 'Run :: Decoding Secrets 879b6968-6596-4425-a890-5593f6e0d1b8'
+      - name: 'Run :: Decoding Secrets 185d022a-b770-416e-b2b6-f690e412e9c3'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -243,7 +242,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ github.event.client_payload.releaseData == null }}
     steps:
-      - name: 'Run :: Decoding Secrets d274f1db-b4ab-4d7a-b775-e42fd3630b44'
+      - name: 'Run :: Decoding Secrets fc99481e-c4ed-44f4-b2b3-92b16a3bb02b'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
