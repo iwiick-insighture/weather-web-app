@@ -139,7 +139,9 @@ jobs:
               
   build-and-sync-web-app:
     name: Build And Sync Web App
-    permissions: write-all
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ubuntu-latest
     env:
       REACT_APP_LABEL: "HI FROM ENV"
