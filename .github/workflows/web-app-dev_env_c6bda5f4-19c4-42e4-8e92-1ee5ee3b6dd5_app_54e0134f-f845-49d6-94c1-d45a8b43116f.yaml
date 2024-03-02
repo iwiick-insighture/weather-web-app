@@ -19,7 +19,6 @@ env:
   APP_INSTALL_DEPS_COMMAND: npm i
   APP_BUILD_COMMAND: npm run build
   DEPLOY_STEP_SHOULD_DEPLOY: 'false'
-  REACT_APP_LABEL: '"HI FROM ENV"'
 jobs:
   code-scan:
     name: Code Scan
@@ -28,7 +27,7 @@ jobs:
     steps:
       - name: 'Run :: Checkout repository for Code Scan'
         uses: actions/checkout@v4
-      - name: 'Run :: Decoding Secrets a6240ef1-35cf-4e9a-a32a-f6d1e5e09358'
+      - name: 'Run :: Decoding Secrets f057d972-da0b-47a7-a7ef-5bcd5dff60b5'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -66,7 +65,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: 'Run :: Decoding Secrets cdb205f6-9b2b-40d6-ad15-b9ebb5e32d28'
+      - name: 'Run :: Decoding Secrets 428a5223-96aa-446a-ae93-f46019bb092f'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -93,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData }}
     steps:
-      - name: 'Run :: Decoding Secrets ab2eaf3b-3468-4e3f-b2d9-53e32a4ae683'
+      - name: 'Run :: Decoding Secrets 9a7bb573-dc15-4d5c-8c59-b2a9ae8c4a24'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -157,7 +156,7 @@ jobs:
 
               git fetch
               git checkout ${{ github.event.client_payload.commitId }}
-      - name: 'Run :: Decoding Secrets ed8ccbf0-4460-478f-ace7-ba975ce7d256'
+      - name: 'Run :: Decoding Secrets 92581b76-61b4-44fa-ae7a-ded99b3aeddc'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -167,7 +166,7 @@ jobs:
                   fi
                   echo "${{ env.ENCODED_PIPELINE_SECRET }}" | base64 --decode | jq -r 'to_entries[] | "\(.key)=\(.value)"' | while read line; do echo "$line" >> $GITHUB_ENV; echo "::add-mask::${line#*=}"; done
                 
-      - name: 'Run :: Configure AWS credentials 858268de-4af9-442e-8439-5fcd0921f16c'
+      - name: 'Run :: Configure AWS credentials b4793233-ea44-4fe6-8377-dcb4a5a6344f'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.roleARN }}
@@ -182,7 +181,9 @@ jobs:
       - name: 'Run :: Build App'
         run: ${{ env.APP_BUILD_COMMAND }} && ls
       - name: 'Run :: Sync Web App with S3 bucket'
-        run: aws s3 sync ${{ env.APP_BUILD_FOLDER }} ${{ env.S3_SYNC_URL }}
+        run: >-
+          aws s3 sync ${{ env.APP_BUILD_FOLDER }} ${{ env.S3_SYNC_URL }}
+          --delete
   _status-success:
     name: _status Success
     permissions: write-all
@@ -191,7 +192,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ !(failure() || cancelled()) }}
     steps:
-      - name: 'Run :: Decoding Secrets f4d9fbf1-bd6e-48d6-be27-3ea49dc2abd0'
+      - name: 'Run :: Decoding Secrets 20aa33aa-89e7-412a-a9b4-54af78e3b8f5'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -214,7 +215,7 @@ jobs:
       - build-and-sync-web-app
     if: ${{ failure() || cancelled() }}
     steps:
-      - name: 'Run :: Decoding Secrets b3b56835-f510-4ac2-92c6-3b276a724ad6'
+      - name: 'Run :: Decoding Secrets 2c8ebbb5-b2dc-4dcc-a00e-0082d64eedfb'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
@@ -235,7 +236,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.client_payload.releaseData == null }}
     steps:
-      - name: 'Run :: Decoding Secrets 05b67ef0-94e3-4c9a-bbda-309de826d3a5'
+      - name: 'Run :: Decoding Secrets d2c9918f-effb-4b62-9895-1a1a9cb0dd4d'
         run: |2-
 
                   if [ ! -x "$(command -v jq)" ]; then
