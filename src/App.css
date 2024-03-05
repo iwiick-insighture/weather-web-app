@@ -1,9 +1,11 @@
 .App {
   text-align: center;
+  font-family: "Poppins", sans-serif;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 1.1em; /* Adjust this value to match the height of your text */
+  margin: 0 -0.3em -0.2em -0.55em; /* Add margin to the logo for spacing */
   pointer-events: none;
 }
 
@@ -14,7 +16,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #0368B1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,8 +26,34 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header .Stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Forecase-sub, .Forecast-title {
+  margin: -5px; 
+}
+
+.Forecase-sub {
+  font-weight: 200;
+  font-size: 20px; 
+}
+
+.App-header .Forecast-title {
+  font-size: 45px;
+}
+
+.Weather-info {
+  font-size: 16px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Weather-info p,h3{
+  margin: 0;
 }
 
 @keyframes App-logo-spin {
