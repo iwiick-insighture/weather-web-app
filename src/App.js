@@ -28,9 +28,10 @@ const App = () => {
     const fetchData = async () => {
       try {
         if (process.env.REACT_APP_FORECAST_API) {
-          const response = await axios.get(
-            `${process.env.REACT_APP_FORECAST_API}`
-          );
+          const response = await axios({
+            method: "get",
+            baseURL: `${process.env.REACT_APP_FORECAST_API}`,
+          });
           setData(response.data);
         } else {
           console.log(
